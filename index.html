@@ -10,7 +10,7 @@
   <title>Vert.x- 최신 웹과 기업을 위한 매우 쉬운 비동기식 어플리케이션 개발</title>
   <script>
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-30144458-1']);
+    _gaq.push(['_setAccount', 'UA-35733016-2']);
     _gaq.push(['_trackPageview']);
     (function() {
       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -72,14 +72,14 @@
       <div class="well">
         <h3 class="title">다양한 언어</h3>
         <br/>
-        <p>여러분의 어플리케이션 요소를  <strong>JavaScript</strong>, <strong>CoffeeScript</strong>, <strong>Ruby</strong>, <strong>Python</strong>, <strong>Groovy</strong> 혹은 <strong>Java</strong>로 작성해보세요. 또는 하나의 어플리케이션에서 여러 언어들을 섞어서 사용할 수도 있습니다.</p>
+        <p>여러분의 어플리케이션 구성요소들을  <strong>JavaScript</strong>, <strong>CoffeeScript</strong>, <strong>Ruby</strong>, <strong>Python</strong>, <strong>Groovy</strong> 혹은 <strong>Java</strong>로 작성해보세요. 또는 하나의 어플리케이션에서 여러 언어들을 같이 사용할 수도 있습니다.</p>
       </div>
     </div>
     <div class="span3">
       <div class="well">
         <h3 class="title">간단함</h3>
         <br/>
-        <p>...지나치게 단순하지 않습니다. 몇줄만의 코드로  확장성 있는 어플리케이션을 제작합니다. 정신없는 xml 설정은 필요없습니다.</p>
+        <p>지나치게 단순하지는 않습니다. 몇줄만의 코드로 확장성 있는 어플리케이션을 제작할 수 있습니다. 정신없는 xml 설정은 필요없습니다.</p>
         <br/>
       </div>
     </div>
@@ -95,7 +95,7 @@
       <div class="well">
         <h3 class="title">동시성</h3>
         <br/>
-        <p>정말 간단한 동시성 모델은 기존의 멀티-스레드 프로그래밍의 귀찮음으로 부터 벗어날 수 있습니다.</p>
+        <p>굉장히 간단한 동시성 모델로 기존의 멀티-스레드 프로그래밍의 번거로움으로 부터 벗어날 수 있습니다.</p>
         <br/><br/>
       </div>
     </div>
@@ -160,7 +160,7 @@
             <h3 class="title">어디 코드를 한번 봅시다.</h3>
             <br/>
 
-            <p>확장성이 뛰어난 웹 서버를 만들어 봅시다. 이 서버는 <code>webroot</code> 디렉토리에 있는 파일을 보여줄 겁니다.</p>
+            <p>확장성이 뛰어난 웹 서버를 만들어 봅시다. 이 서버는 <code>webroot</code> 디렉토리에 있는 파일을 보여줍니다.</p>
             <p>(아래의 탭들 중에서 각각의 언어들을 클릭해보세요.)</p>
 
             <ul class="nav nav-tabs">              
@@ -174,7 +174,7 @@
             <div class="tab-content">
               <div class="tab-pane active" id="ws_js">
 
-                <p>아래 코드를 <code>server.js</code>로 저장합니다.</p>
+                <p>다음 코드를 <code>server.js</code>로 저장합니다.</p>
                 <pre class="prettyprint">
 load('vertx.js')
 
@@ -186,10 +186,10 @@ vertx.createHttpServer().requestHandler(function(req) {
                 <p>그리고 다음과 같이 실행합니다.</p>
                 <p><code>vertx run server.js</code></p>
 
-                <p><strong>많은 코어의 서버를 이용하고 있고 그 코어들을 모두 사용하고 싶다구요?</strong></p>
-                <p>그럼 이렇게 하면 되지요.</p>
+                <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
+                <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run server.js -instances 32</code></p>
-                <p>Vert.x 는 여러 인스턴스 사이에서 요청을 처리하는 마술을 보여줄 겁니다.</p>
+                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
                 
 
               </div>
@@ -208,10 +208,10 @@ end.listen(8080)
                 <p>그리고 다음과 같이 실행합니다.</p>
                 <p><code>vertx run server.rb</code></p>
 
-                <p><strong>많은 코어의 서버를 이용하고 있고 그 코어들을 모두 사용하고 싶다구요?</strong></p>
-                <p>그럼 이렇게 하면 되지요.</p>
+                <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
+                <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run server.rb -instances 32</code></p>
-                <p>Vert.x 는 여러 인스턴스 사이에서 요청을 처리하는 마술을 보여줄 겁니다.</p>
+                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
             
 
               </div>
@@ -233,10 +233,10 @@ server.listen(8080)
                 <p>그리고 다음과 같이 실행합니다.</p>
                 <p><code>vertx run server.py</code></p>
 
-                <p><strong>많은 코어의 서버를 이용하고 있고 그 코어들을 모두 사용하고 싶다구요?</strong></p>
-                <p>그럼 이렇게 하면 되지요.</p>
+                <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
+                <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run server.py -instances 32</code></p>
-                <p>Vert.x 는 여러 인스턴스 사이에서 요청을 처리하는 마술을 보여줄 겁니다.</p>
+                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
             
 
               </div>
@@ -253,10 +253,10 @@ vertx.createHttpServer().requestHandler { req ->
                 <p>그리고 다음과 같이 실행합니다.</p>
                 <p><code>vertx run Server.groovy</code></p>
 
-                <p><strong>많은 코어의 서버를 이용하고 있고 그 코어들을 모두 사용하고 싶다구요?</strong></p>
-                <p>그럼 이렇게 하면 되지요.</p>
+                <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
+                <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run Server.groovy -instances 32</code></p>
-                <p>Vert.x 는 여러 인스턴스 사이에서 요청을 처리하는 마술을 보여줄 겁니다.</p>
+                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
             
 
               </div>
@@ -279,13 +279,13 @@ public class Server extends Verticle {
 }
                 </pre>
 
-                <p>Run it with:</p>
+                <p>그리고 다음과 같이 실행합니다.</p>
                 <p><code>vertx run Server.java</code></p>
 
-                <p><strong>Have lots of cores on your server and want to use them all?</strong></p>
-                <p>Just spin up more instances:</p>
+                <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
+                <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run Server.java -instances 32</code></p>                
-                <p>Vert.x will do the magic to ensure the requests are distributed amongst the instances:</p>
+                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
             
 
 

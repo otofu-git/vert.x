@@ -23,8 +23,19 @@
 
 
 <body onload="prettyPrint()">
-
-<div class="navbar navbar-fixed-top">
+<div id="fb-root"></div>
+	<script>
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "http://connect.facebook.net/ko_KR/all.js#xfbml=1";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+	<div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
 
@@ -61,7 +72,7 @@
     <div class="span12">
       <div class="hero-unit" style="padding: 30px;">
         <h1>vert.x</h1>
-        <p class="title">최신 웹과 기업을 위한 매우 쉬운 비동기식 어플리케이션 개발</p>          
+        <p class="title">최신 웹과 기업을 위한 매우 쉬운 비동기식 어플리케이션 개발</p>
       </div>
     </div>
   </div>
@@ -113,10 +124,10 @@
         <br/>
         <ul>
           <li>
-            <p><strong>분산 이벤트 버스</strong>가 서버사이드와 클라이언트에 걸쳐 있어 매우 쉽게 실시간 웹을 구현할 수 있습니다.</p>
+            <p><strong>분산 이벤트 버스</strong>가 서버사이드와 클라이언트 전반에 걸쳐 있어 매우 쉽게 실시간 웹을 구현할 수 있습니다.</p>
           </li>
           <li>
-            <p><strong>이벤트 버스 모듈</strong>에는 웹 서버, persistor, mailer 그리고 work queue 들을 포함합니다.</p>
+            <p><strong>이벤트 버스 모듈</strong>에는 웹 서버, persistor, mailer 그리고 work queue 등이 있습니다.</p>
           </li>
           <li>
             <p><strong>TCP/SSL</strong> 서버와 클라이언트</p>
@@ -140,7 +151,7 @@
             <p><strong>오픈 소스</strong>이며 코드는 ASL 2.0 라이센스를 따릅니다.</p>
           </li>
           <li>
-            <p><strong>임베디드 할수있는.</strong> 모든 vert.x 플랫폼에서 작동하는걸 원치 않으면 라이브러리 형식으로 Java나 Groovy 어플리케이션에 넣어버릴 수 있습니다. 
+            <p><strong>임베디드 할수있습니다.</strong> 모든 vert.x 플랫폼에서 작동하는걸 원치 않으면 라이브러리 형식으로 Java나 Groovy 어플리케이션에 집어 넣어버릴수도 있습니다. 
           </li>
           <li>
             <p>문서에서 <strong>다른 더 많은 특징들</strong>을 살펴보세요.</a></p>
@@ -190,7 +201,7 @@ vertx.createHttpServer().requestHandler(function(req) {
                 <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
                 <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run server.js -instances 32</code></p>
-                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
+                <p>Vert.x 은 다수의 인스턴스에서 동작할 것입니다.</p>
                 
 
               </div>
@@ -212,7 +223,7 @@ end.listen(8080)
                 <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
                 <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run server.rb -instances 32</code></p>
-                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
+                <p>Vert.x 는 다수의 인스턴스에서 동작할 것입니다.</p>
             
 
               </div>
@@ -237,7 +248,7 @@ server.listen(8080)
                 <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
                 <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run server.py -instances 32</code></p>
-                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
+                <p>Vert.x 는 다수의 인스턴스에서 동작할 것입니다.</p>
             
 
               </div>
@@ -257,7 +268,7 @@ vertx.createHttpServer().requestHandler { req ->
                 <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
                 <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run Server.groovy -instances 32</code></p>
-                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
+                <p>Vert.x 는 다수의 인스턴스에서 동작할 것입니다.</p>
             
 
               </div>
@@ -286,7 +297,7 @@ public class Server extends Verticle {
                 <p><strong>시스템의 여러 core들을 모두 사용하고 싶다구요?</strong></p>
                 <p>그럼 이렇게 실행해 봅시다.</p>
                 <p><code>vertx run Server.java -instances 32</code></p>                
-                <p>Vert.x 은 다수의 인스턴스에서 잘 동작할 것입니다.</p>
+                <p>Vert.x 는 다수의 인스턴스에서 동작할 것입니다.</p>
             
 
 
@@ -296,8 +307,8 @@ public class Server extends Verticle {
           </div>
 
           <div class="well">
-            <p>수고하셨습니다. 하지만 위 코드는 'Hello World'일 뿐입니다.</p>
-            <p><a href="tutorials.html">튜토리얼</a>에서 더욱 중요한 것들을 더 살펴보세요.</p>
+            <p>참 쉽죠? 하지만 위 코드는 'Hello World'일 뿐입니다.</p>
+            <p><a href="tutorials.html">튜토리얼</a>에서 더욱 많은 것들을 더 살펴보세요.</p>
           </div>
                     
         </div>
@@ -312,6 +323,7 @@ public class Server extends Verticle {
                 </p>
                 <p>한국어 번역 - 오형욱(otofu@otofu.me)
                 </p>
+                <div class="fb-like" data-href="http://vertx-kor.otofu.me/" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true" data-font="tahoma"></div>
                 </div>
               </div>
           </div>

@@ -9,7 +9,7 @@
   <script type="text/javascript" src="google-code-prettify/prettify.js"></script>
   <link href="css/vertx.css" type="text/css" rel="stylesheet"/>
   <link href="css/sunburst.css" type="text/css" rel="stylesheet"/>
-  <title>Vert.x Web Application Tutorial</title>
+  <title>Vert.x 웹 어플리케이션 튜토리얼</title>
   <script>
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-35733016-2']);
@@ -39,16 +39,16 @@
 
       <div class="nav-collapse">
         <ul class="nav">
-          <li><a href="/">Home</a></li>
-          <li><a href="downloads.html">Download</a></li>
-          <li><a href="install.html">Install</a></li>
-          <li class="active"><a href="tutorials.html">Tutorials</a></li>
-          <li><a href="examples.html">Examples</a></li>
-          <li><a href="docs.html">Documentation</a></li>
-          <li><a href="https://github.com/vert-x/vert.x">Source</a></li>
-          <li><a href="http://groups.google.com/group/vertx">Google Group</a></li>
-          <li><a href="community.html">Community</a></li>
-          <li><a href="http://vertxproject.wordpress.com/">Blog</a></li>
+          <li><a href="/">홈</a></li>
+          <li><a href="downloads.html">다운로드</a></li>
+          <li><a href="install.html">설치</a></li>
+          <li class="active"><a href="tutorials.html">튜토리얼</a></li>
+          <li><a href="examples.html">예제</a></li>
+          <li><a href="docs.html">문서</a></li>
+          <li><a href="https://github.com/vert-x/vert.x">코드</a></li>
+          <li><a href="http://groups.google.com/group/vertx">구글 그룹</a></li>
+          <li><a href="community.html">커뮤니티</a></li>
+          <li><a href="http://vertxproject.wordpress.com/">블로그</a></li>
         </ul>
       </div>
     </div>
@@ -60,7 +60,7 @@
   <div class="row">
     <div class="span12">
       <div class="well">
-        <h1 style="font-size: 35px;">JavaScript Web Application Tutorial</h1>
+        <h1 style="font-size: 35px;">자바스크립트 웹 어플리케이션 만들기</h1>
       </div>
     </div>
   </div>
@@ -71,18 +71,18 @@
 <div>
 
 
-<p>In this tutorial we're going to write a 'real-time' web-application using vert.x.</p>
-<p>The application is a shop application called "vToons" which allows you to buy music tracks online.</p>
-<p>The application architecture is very simple; it consists of a modern client-side JavaScript MVVM (MVC) application which communicates using the Vert.x event bus with a persistor module on the server. The persistor is used to store the music catalogue and also for persisting orders.</p>
-<p>It also consists of a web server module on the server which serves the static resource - html, css and js files, and which bridges the server side event bus with client side JavaScript.</p>
-<p><strong>The application does not require any custom server side modules to be written</strong>. You just write your client side JavaScript and it communicates with the persistor as if it was running locally.</p>
+<p>자 vert.x 를 이용해서 실시간 웹 어플리케이션을 만들어 봅시다.</p>
+<p>우리는 "vToons" 라는 음반 쇼핑 어플리케이션을 만들겁니다.</p>
+<p>이 어플리케이션의 구조는 굉장히 간단합니다. Vert.x 이벤트 버스와 서버의 persistor 모듈을 이용해 클라이언트측  JavaScript MVVM (MVC) 어플리케이션으로 구성되어 있습니다. persistor 모듈은 음반 상품을 저장하고 주문을 처리하는데 쓰입니다.</p>
+<p>또한 html, css 그리고 js파일과 같은 정적인 파일들을 출력하는 웹 서버 모듈과 서버측 이벤트 버스와 클라이언트측 자바스크립트가 통신하는 부분으로 구성되어 있습니다.</p>
+<p><strong>이 어플리케이션을 위해 따로 모듈을 만들 필요는 없습니다</strong>. You just write your client side JavaScript and it communicates with the persistor as if it was running locally.</p>
 <p>The only thing that needs to be written on the server is a simple script which tells Vert.x to start the persistor and the web server. The script can also contain configuration needed for the application.</p>
 <p>In this version of this tutorial we've written the script in JavaScript. If you'd prefer to write it in Ruby or Groovy, please see the Ruby or Groovy version of this tutorial.</p>
 <p>If you'd rather just run the complete code, the working example is present in the <code>webapp</code> directory of the examples in the distribution. Read the README there for instructions on how to run it.</p>
-<p>You can also see the code in <a href="https://github.com/vert-x/vert.x/tree/master/vertx-examples/src/main/javascript/webapp">github</a>.</p>
-<h2 id="step-1-install-vertx">Step 1. Install vert.x</h2><br/>
-<p>If you haven't yet installed vert.x, <a href="install.html">do that now</a>. </p>
-<p>The rest of the tutorial will assume you have installed vert.x in directory <code>VERTX_HOME</code>.</p>
+<p>이 코드는 <a href="https://github.com/vert-x/vert.x/tree/master/vertx-examples/src/main/javascript/webapp">github</a> 에서도 볼 수 있습니다.</p>
+<h2 id="step-1-install-vertx">1 단계. Vert.x 설치하기</h2><br/>
+<p>아직 vert.x 설치를 안하셨나요? <a href="install.html">그럼 여기로</a>. </p>
+<p>다음 부분부터는 vert.x 를 <code>VERTX_HOME</code> 에 설치한 것으로 간주하고 진행합니다.</p>
 <h2 id="step-2-get-the-web-server-running">Step 2. Get the Web Server running</h2><br/>
 <p>We're going to need a web server to serve the static resources. Let's get one running. With Vert.x you can write a web server in just a few lines of code, but we're not going to do that. Instead Vert.x ships with an out-of-the-box web server module, so we'll just use that.</p>
 <p>We'll create a script which starts the web server module and also contains the configuration.</p>

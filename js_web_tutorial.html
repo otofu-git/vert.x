@@ -180,7 +180,7 @@ echo "&lt;html&gt;&lt;body&gt;Hello World&lt;/body&gt;&lt;/html&gt;" &gt; web/in
 						<p>잠시 이것저것 클릭해 봅시다. 어플리케이션을 이해하는데 도움이 될 겁니다.</p>
 						<p>가운데에는 상품과 장바구니를 조회할 수 있는 각각의 탭이 위치해 있습니다.</p>
 						<p>
-							왼쪽에는 로그인 할 수 있는 폼이 있네요.<br />
+							왼쪽에는 로그인 할 수 있는 폼이 있습니다.<br />
 						</p>
 						<h3 id="step-4-get-the-persistor-up-and-running">4단계.
 							Persistor 를 올리고 실행시키기</h3>
@@ -226,13 +226,13 @@ vertx.deployModule('vertx.web-server-v1.0', webServerConf);
 						</p>
 						<pre class="prettyprint">vertx run app.js
 </pre>
-						<p>Persistor 와 웹 서버가 같이 돌아가고 웹 서버는 이전 처럼 클라이언트 어플리케이션을 제공할 겁니다.</p>
+						<p>Persistor 와 웹 서버가 같이 실행되고 웹 서버는 이전 처럼 클라이언트 어플리케이션을 제공할 겁니다.</p>
 						<h2 id="step-5-connecting-up-the-client-side-to-the-event-bus">5단계.
 							클라이언트를 Event Bus 로 연결하기</h2>
 						<br />
 						<p>지금까지 웹 서버를 만들어 돌렸지만 서버측 persistor는 event bus를 기다릴 뿐 아무동작도
 							하지 않았습니다.</p>
-						<p>클라이언트 측과 연결해 event bus 를 통해 persistor와 상호작용 할 수 있게 만들어 봅시다.</p>
+						<p>클라이언트 측과 event bus 를 통해 연결 해 persistor와 상호작용 할 수 있게 만들어 봅시다.</p>
 						<p>우리는 SockJS 브릿지를 이용할 겁니다.</p>
 						<p>SockJS 기술을 통해 브라우저와 서버가 전이중 통신을 할겁니다. 마치 웹소켓 같은? 브라우저나
 							네트워크가 웹 소켓을 지원하지 않더라도요.</p>
@@ -271,7 +271,7 @@ vertx.deployModule('vertx.web-server-v1.0', webServerConf);
 							<code>inbound_permitted</code>
 							와
 							<code>outbound_permitted</code>
-							필드가 있는데요, 이 JSON 배열들로 어떤 event bus 메세지를 허용할지 결정하게 됩니다. 기본적으로 브릿지는
+							필드가 있는데, 이 JSON 배열들로 어떤 event bus 메세지를 허용할지 결정하게 됩니다. 기본적으로 브릿지는
 							방화벽과 비슷한 역할을 하며 우리가 원하는 메세지만 통과할 수 있도록 합니다.
 							<code>inbound_permitted</code>
 							필드는 클라이언트 --&gt; 서버로 향하는 메세지를 결정하고
@@ -281,7 +281,7 @@ vertx.deployModule('vertx.web-server-v1.0', webServerConf);
 						<p>만약 클라이언트에 persistor로 향하는 모든 메세지를 허용한다면 누군가 데이터베이스의 모든 데이터를
 							삭제한다거나 볼 권한이 없는 데이터를 조회 하는 무시무시한 결과를 초래 할 수도 있습니다.</p>
 						<p>(방화벽이 작동하는 방식에 대한 자세한 설명은 vert.x 매뉴얼을 참조하세요.)</p>
-						<p>처음에는 persistor에 앨범 데이터를 조회만 할수 있는 요청만 받으려고 합니다. 이 요청은 클라이언트
+						<p>처음엔 persistor에 앨범 데이터를 조회만 할 수 있는 요청만 받으려고 합니다. 이 요청은 클라이언트
 							측 어플리케이션에 구매할 수 있는 앨범을 표시하는데 필요합니다.</p>
 						<p>
 							위의 설정은 클라이언트로 부터
@@ -299,76 +299,57 @@ vertx.deployModule('vertx.web-server-v1.0', webServerConf);
 						<p>파일을 저장합니다.</p>
 						<h2 id="step-6-inserting-the-static-data">6단계. 정적 데이터 삽입</h2>
 						<br />
-						<p>We're almost at the point where the client side app can see
-							the catalogue data. But first we need to insert some static data.</p>
-						<p>To do this we need a script which inserts catalogue and
-							other data needed by the application in the database. It does
-							this by sending JSON messages on the event bus to the persistor.</p>
+						<p>곧있으면 클라이언트 어플리케이션에서 카탈로그를 볼 수 있을겁니다. 그전에 먼저 정적 데이터 몇개를 입력해야 합니다.</p>
+						<p>어플리케이션에 필요한 카탈로그와 다른 데이터를 데이터베이스에 넣기 위해 스크립트 하나가 필요합니다.
+							이 스크립트는 JSON 메세지를 이벤트 버스를 통해 persistor로 보냅니다.</p>
 						<p>
-							Copy
+							다음과 같이 
 							<code>static_data.js</code>
-							into your directory as follows:
+							를 디렉토리로 복사합니다.
 						</p>
 						<pre class="prettyprint">cp $VERTX_HOME/examples/javascript/webapp/static_data.js .
 </pre>
 						<p>
-							We want to insert the static data only after the persistor
-							verticle has completed starting up so we edit
-							<code>app.js</code>
-							as follows:
+							Persistor verticle이 완전히 시작된 뒤에 데이터들이 입력되어야 하기 때문에 
+							<code>app.js</code>를 다음과 같이 수정합니다.
 						</p>
 						<pre class="prettyprint">vertx.deployModule('vertx.mongo-persistor-v1.0', null, 1, function() {
   load('static_data.js');
 });
 </pre>
 						<p>
-							The function that we're specifying in the call to
-							<code>deployModule</code>
-							won't be invoked until the persistor is fully started. In that
-							function we just load the static data script.
+							<code>deployModule</code>에서 지정한 함수는 persistor가 완전히 시작되기 전 까지는 실행되지 않습니다.
+							이 함수는 정적 데이터를 입력하는 스크립트를 로드합니다.
 						</p>
 						<p>
-							Save the edited
-							<code>app.js</code>
-							and restart it.
+							수정한 <code>app.js</code>를 저장하고 재시작 합니다.
 						</p>
 						<pre class="prettyprint">vertx run app.js
 </pre>
-						<p>Refresh your browser.</p>
-						<p>You should now see the catalogue displayed in the client
-							side app:</p>
+						<p>브라우저를 새로고침 합니다.</p>
+						<p>다음과 같이 클라이언트측 어플리케이션에서 카탈로그가 표시된 것을 볼 수 있습니다.</p>
 						<p>
 							<img alt="Client Application" src="tutorial_2.png" /><br />
 						</p>
-						<p>Now there is some stuff to buy, you should be able to add
-							stuff to your cart, and view the contents of your cart by
-							clicking on the cart tab.</p>
-						<h2 id="step-7-requesting-data-from-the-server">Step 7.
-							Requesting data from the server</h2>
+						<p>이제 구매할 수 있는 몇개의 품목들이 생겼습니다. 이 품목들을 장바구니에 담고 장바구니 탭을 클릭해 장바구니에 담긴 품목들을 볼 수 있게 해야합니다.</p>
+						<h2 id="step-7-requesting-data-from-the-server">7단계
+							서버에 데이터를 요청하기</h2>
 						<br />
-						<p>As previously mentioned, this isn't a tutorial on how to
-							write a knockout.js client-side application, but let's take a
-							quick look at the code in the client side app that requests the
-							catalogue data and populates the shop.</p>
+						<p>앞서 언급했듯이 이 튜토리얼에서는 knockout.js 클라이언트측 어플리케이션에 대해서는 설명하지 않기로 했습니다.
+							그렇지만 클라이언트 어플리케이션이 카탈로그 데이터를 요청하고 shop에 표시하는 코드를 간단히 보도록 합시다.</p>
 						<p>
-							The client side application JavaScript is contained in the file
+							클라이언트측 어플리케이션 자바스크립트는 
 							<code>web/js/client_app.js</code>
-							. If you open this in your text editor you will see the following
-							line, towards the top of the script:
+							에 포함되어 있습니다. 텍스트 에디터로 파일을 열어보면 코드의 윗부분에서 다음과 같은 줄을 볼 수 있습니다.
 						</p>
 						<pre class="prettyprint">var eb = new vertx.EventBus(window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/eventbus');
 </pre>
 						<p>
-							This is using the
-							<code>vertxbus.js</code>
-							library to create an
-							<code>EventBus</code>
-							object. This object is then used to send and receive messages
-							from the event bus.
+							이 스크립트에서는 <code>EventBus</code>객체를 생성하기 위해
+							<code>vertxbus.js</code>라이브러리를 이용합니다.
+							이 객체는 이벤트 버스로 부터 메세지를 주고 받는데 쓰입니다.
 						</p>
-						<p>If you look a little further down the script, you will find
-							the part which loads the catalogue data from the server and
-							renders it:</p>
+						<p>파일의 조금 더 아래쪽을 보면 다음과 같이 서버에서 데이터를 받아 페이지에 그려넣는 부분을 볼 수 있습니다.</p>
 						<pre class="prettyprint">eb.onopen = function() {
 
     // Get the static data
@@ -389,94 +370,60 @@ vertx.deployModule('vertx.web-server-v1.0', webServerConf);
   };
 </pre>
 						<p>
-							The
 							<code>onopen</code>
-							is called when, unsurprisingly, the event bus connection is fully
-							setup and open.<br />
+							함수가 호출되면 아니나 다를까 이벤트 버스가 완전히 설정되고 연결이 열리게 됩니다.<br />
 						</p>
 						<p>
-							At that point we are calling the
-							<code>send</code>
-							function on the event bus to a send a JSON message to the address
-							<code>vertx.mongopersistor</code>
-							. This is the address of the MongoDB persistor module that we
-							configured earlier.
+							<code>send</code>함수가 호출되는 부분에서 이벤트 버스는
+							<code>vertx.mongopersistor</code> 주소로 JSON 메세지를 보냅니다.
+							이 주소는 먼저 구성한  MongoDB persistor 모듈을 가르킵니다.
 						</p>
 						<p>
-							The JSON message that we're sending specifies that we want to
-							find and return all albums in the database. (For a full
-							description of the operations that the MongoDBPersistor module
-							expects you can consult the README.md in the
-							<code>mod-mongo-persistor</code>
-							repository).
+							JSON 메세지는 우리가 원하는 모든 앨범을 데이터베이스에서 찾아 되돌려 줍니다.
+							(MongoDBPersistor 모듈의 모든 작업에 대한 설명은 <code>mod-mongo-persistor</code>
+							저장소의 README.md에서 찾아볼 수 있습니다.)
 						</p>
 						<p>
-							The final argument that we pass to to
-							<code>send</code>
-							is a reply handler. This is a function that gets called when the
-							persistor has processed the operation and sent the reply back
-							here. The first argument to the reply handler is the reply
-							itself.
+							<code>send</code>함수의 마지막 매개변수 넘기게 되는 값은 reply 핸들러 입니다.
+							persistor가  작업을 처리한 뒤에 보내주는 응답을 이 함수에서 받게됩니다.
+							이 함수의 첫번째 매개변수는 응답의 내용입니다.
 						</p>
 						<p>
-							In this case, the reply contains a JSON message with a field
-							<code>results</code>
-							which contains a JSON array containing the albums.
+							이 경우 <code>results</code> 필드 값의 JSON 메세지가 포함된 응답을 받게 됩니다.
+							여기에는 앨범들의 JSON 배열이 들어있습니다.
 						</p>
-						<p>Once we get the albums we give them to knockout.js to
-							render on the view.</p>
-						<h2 id="step-8-handling-login">Step 8. Handling Login</h2>
+						<p>앨범들을 받아 페이지에 출력하기 위해 knockout.js로 전달합니다.</p>
+						<h2 id="step-8-handling-login">8단계. 로그인 처리</h2>
 						<br />
-						<p>In order to actually send an order, you need to be logged
-							in.</p>
+						<p>실제로 주문을 보내려면 로그인을 해야 합니다.</p>
 						<p>
-							To handle login we will start an instance of the
-							<code>vertx.auth-mgr</code>
-							which lives in the repository. This is a simple module which
-							handles simple user/password authentication and authorisation.
-							Users credentials are stored in the MongoDB database. Fore more
-							sophisticated auth, you can easily write your own auth module and
-							the bridge can talk to that instead.
+							로그인을 처리하기 위해 저장소에 있는 <code>vertx.auth-mgr</code> 인스턴스를 시작해야 합니다.
+							이것은 사용자/비밀번호 인증 및 권한 부여를 처리하는 간단한 모듈입니다.
+							사용자 자격 증명은 MongoDB 데이터베이스에 저장됩니다. 
+							이것 대신 좀 더 수준 높은 인증을 위해 직접 모듈과 브릿지를 쉽게 만들 수 있습니다.
 						</p>
 						<p>
-							To login, the client sends a message on the event bus to the
-							address
-							<code>vertx.basicauthmanager.login</code>
-							with fields
-							<code>username</code>
-							and
-							<code>credentials</code>
-							, and if successful it replies with a message containing a unique
-							session id, in the
-							<code>sessionID</code>
-							field.
+							로그인 하기 위해 클라이언트는 <code>username</code>필드와  <code>credentials</code>필드를
+							이벤트 버스를 통해 <code>vertx.basicauthmanager.login</code>라는 주소로 보내고
+							로그인에 성공하게 되면 유니크한 세션 id인 <code>sessionID</code>필드가 포함된 메세지를 받게 됩니다.
 						</p>
-						<p>This session id should then be sent in any subsequent
-							message from the client to the server that requires
-							authentication (e.g. persisting an order).</p>
+						<p>이 세션 id는 서버가 클라이언트를 인증하기 위해 그 뒤로 보내는 모든 메세지에 보내야 합니다.
+							(예: 주문 유지 등.)</p>
 						<p>
-							When the bridge receives a message with a
-							<code>sessionID</code>
-							field in it, it will contact the auth manager to see if the
-							session is authorised for that resource.
+							브릿지가 <code>sessionID</code>와 함께 메시지를 받으면 
+							브릿지는 인증 매니저와 연결해 이 세션이 해당 자료에 대한 권한이 있는지 확인합니다.
 						</p>
 						<p>
-							Let's add a line to start the
-							<code>auth-mgr</code>
-							:
+							<code>auth-mgr</code>를 실행하기 위해 한 줄을 추가합시다.
 						</p>
 						<p>
-							Edit
-							<code>app.js</code>
-							and add the following, just after where the Mongo Persistor is
-							deployed.
+							<code>app.js</code>를 다음 처럼 수정하고  Mongo Persistor 가 시작되는 부분 다음에 아래 코드를 추가합니다.
 						</p>
 						<pre class="prettyprint">// Deploy an auth manager to handle the authentication
 
 vertx.deployModule('vertx.auth-mgr-v1.0');
 </pre>
-						<p>We'll also need to tell the bridge to let through any login
-							messages:</p>
+						<p>로그인 메시지들을 받을 수 있게 브릿지에게 알려줍니다.</p>
 						<pre class="prettyprint">inbound_permitted: [
   // Allow calls to login and authorise
   {
@@ -484,27 +431,19 @@ vertx.deployModule('vertx.auth-mgr-v1.0');
   },
   ...
 </pre>
-						<p>Save, and restart the app.</p>
+						<p>저장하고 재시작 합니다.</p>
 						<p>
-							You can test login by attempting to log-in with username
-							<code>tim</code>
-							and password
-							<code>password</code>
-							. A message should appear on the left telling you you are logged
-							in!
+							사용자 이름 <code>tim</code>과 비밀번호 <code>password</code>로 로그인을 테스트 해볼 수 있습니다.
+							로그인 되었다는 메세지가 왼쪽에서 나타났습니다!
 						</p>
 						<p>
 							<img alt="Client Application" src="tutorial_3.png" />
 						</p>
-						<p>Let's take a look at the client side code which does the
-							login.</p>
+						<p>로그인을 하는 클라이언트 측 코드를 살펴봅시다.</p>
 						<p>
-							Open
-							<code>web/js/client_app.js</code>
-							and scroll down to the
-							<code>login</code>
-							function. This gets trigged by knockout when the login button is
-							pressed on the page.
+							<code>web/js/client_app.js</code>을 열고 스크롤을 내려
+							<code>login</code> 함수를 봅시다.
+							페이지에서 로그인 버튼을 눌렀을 때 knockout을 통해 실행 됩니다.
 						</p>
 						<pre class="prettyprint">eb.send('vertx.bridge.login', {username: that.username(), password: that.password()}, function (reply) {
     if (reply.status === 'ok') {
@@ -514,24 +453,19 @@ vertx.deployModule('vertx.auth-mgr-v1.0');
     }
   });
 </pre>
-						<p>As you can see, it sends a login JSON message to the bridge
-							with the username and password.</p>
+						<p>보시다시피 이 함수는 사용자이름과 비밀번호를 브릿지를 통해 JSON 메세지로 보냅니다.</p>
 						<p>
-							When the reply comes back with status
-							<code>ok</code>
-							, it stores the session id which causes knockout to display the
-							"Logged in as... " message.
+							응답으로 status 가 <code>ok</code>로 오게 되면
+							세션 id를 저장하고 knockout은 "Logged in as... " 메세지를 표시합니다.
 						</p>
-						<p>It's as easy as that.</p>
-						<h2 id="step-9-persisting-orders">Step 9. Persisting Orders</h2>
+						<p>참 쉽죠?</p>
+						<h2 id="step-9-persisting-orders">9단계. 주문 하기</h2>
 						<br />
-						<p>Persisting an order is equally simple. We just send a
-							message to the MongoDB persistor component saying we want to
-							store the order.</p>
-						<p>We also need to tell the bridge to let through requests to
-							persist an order. We also need to add the further constraint that
-							only logged-in users can persist orders.</p>
-						<p>Edit the web server configuration so it looks like:</p>
+						<p>계속해서 주문을 하는 것도 똑같이 쉽습니다.
+							MongoDB persistor 구성 요소에게 주문을 저장하고 싶다는 메세지를 보내기만 하면 됩니다.</p>
+						<p>그리고 주문을 계속 하겠다는 요청을 주고 받을 수 있게 브릿지에 알려줍니다.
+							또한 로그인 한 사용자만 주문을 계속 할 수 있게 하기 위한 조건을 추가해야 합니다.</p>
+						<p>다음과 같이 웹 서버 구성을 수정합니다.</p>
 						<pre class="prettyprint">var webServerConf = {  
   port: 8080,
   host: 'localhost',
@@ -565,21 +499,13 @@ vertx.deployModule('vertx.auth-mgr-v1.0');
 };
 </pre>
 						<p>
-							Setting the
-							<code>requires_auth</code>
-							field to
-							<code>true</code>
-							means the bridge will only let through the message if the user is
-							logged in.
+							<code>requires_auth</code> 필드를 <code>true</code>로 설정 함으로써 
+							브릿지는 로그인 된 사용자로부터만 메세지를 주고 받습니다.
 						</p>
-						<p>Ok, let's take a look at the client side code which sends
-							the order.</p>
+						<p>좋습니다. 주문을 보내는 클라이언트 측 코드를 살펴 봅시다.</p>
 						<p>
-							Open up
 							<code>web/js/client_app.js</code>
-							again, and look for the function
-							<code>submitOrder</code>
-							.
+							를 다시 열어서 <code>submitOrder</code>함수를 봅시다.
 						</p>
 						<pre class="prettyprint">that.submitOrder = function() {
 
@@ -610,23 +536,18 @@ vertx.deployModule('vertx.auth-mgr-v1.0');
 };
 </pre>
 						<p>
-							This function converts the order into a JSON object, then calls
-							<code>send</code>
-							on the event bus to send it to the database where it will get
-							persisted.
+							이 함수는 주문을 JSON 객체로 변환한 뒤 <code>send</code>를 호출해
+							주문 상태가 계속 유지 될 수 있도록 이벤트 버스를 통해 데이터베이스에 보냅니다. 
 						</p>
 						<p>
-							Notice that we add a
-							<code>sessionID</code>
-							field to the message with the session id that was returned when
-							we logged in. The bridge requires this field to be set with a
+							로그인 할 때 받은 세션 id를 같이 보내겠다는 것을 알리기 위해 <code>sessionID</code> 필드를 추가합니다.
+							The bridge requires this field to be set with a
 							valid session id or the message will not make it through the
 							bridge firewall, since we set the
 							<code>requires_auth</code>
 							field to true in the server side config.
 						</p>
-						<p>When the reply comes back we tell knockout to display a
-							message.</p>
+						<p>응답이 오면 knockout 에게 메세지를 출력하게 합니다.</p>
 						<p>Everything should be in order, so restart the app again:</p>
 						<pre class="prettyprint">vertx run app.js
 </pre>

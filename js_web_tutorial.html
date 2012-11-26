@@ -541,47 +541,37 @@ vertx.deployModule('vertx.auth-mgr-v1.0');
 						</p>
 						<p>
 							로그인 할 때 받은 세션 id를 같이 보내겠다는 것을 알리기 위해 <code>sessionID</code> 필드를 추가합니다.
-							The bridge requires this field to be set with a
-							valid session id or the message will not make it through the
-							bridge firewall, since we set the
-							<code>requires_auth</code>
-							field to true in the server side config.
+							서버측 설정 <code>requires_auth</code>필드를 true로 바꾼 이후로 이 필드는 유효한 세션 아이디로 되어 있어야 합니다.
+							아니면 메세지는 브릿지 방화벽을 통과하지 못할 것입니다.
 						</p>
 						<p>응답이 오면 knockout 에게 메세지를 출력하게 합니다.</p>
-						<p>Everything should be in order, so restart the app again:</p>
+						<p>다 됐습니다. 어플리케이션을 다시 시작합니다.</p>
 						<pre class="prettyprint">vertx run app.js
 </pre>
-						<p>Refresh the browser.</p>
-						<p>Now log-in and add a few items into your cart. Click to the
-							cart tab and click "Submit Order". The message "Your order has
-							been accepted, an email will be on your way to you shortly"
-							should be displayed!</p>
-						<p>Take a look in the console window of the application. You
-							should see the order has been logged.</p>
+						<p>브라우저를 새로고침 합니다.</p>
+						<p>이제 로그인 하고 몇개의 물품을 장바구니에 담습니다.
+							장바구니 탭을 클릭한 뒤 "Submit Order"를 클릭합니다.
+							"Your order has	been accepted, an email will be on your way to you shortly"
+							라는 메세지가 나타날 것입니다!</p>
+						<p>어플리케이션의 콘솔 창을 한번 보세요. 로그에 주문이 올라온 것을 볼 수 있습니다.</p>
 						<p>
 							<img alt="Client Application" src="tutorial_4.png" />
 						</p>
 						<p>
-							<strong> Congratulations! You have just placed an order.
+							<strong> 축하합니다! 이제 주문을 할 수 있게 되었습니다.
 							</strong>
 						</p>
-						<h2 id="step-11-securing-the-connection">Step 11. Securing
-							the Connection</h2>
+						<h2 id="step-11-securing-the-connection">11 단계. 보안 연결</h2>
 						<br />
-						<p>So far in this tutorial, all client-server traffic has been
-							over an unsecured socket. That's not a very good idea in a real
-							application since we're sending login credentials and orders.</p>
-						<p>Configuring Vert.x to use secure sockets is very easy. (For
-							detailed information on configuring HTTPS, please see the
-							manual).</p>
+						<p>지금까지 이 튜토리얼에서는 모든 클라이언트-서버 통신이 비보안 연결로 이루어 졌습니다.
+							그것은 실제 어플리케이션에서 로그인 자격증명이나 주문을 보내는데 아주 좋지 않은 방법입니다.</p>
+						<p>Vert.x 에 보안 연결을 설정하는 것은 굉장히 쉽습니다. (HTTPS 설정에 대한 더욱 상세한 정보는 매뉴얼을 참고하세요.)</p>
 						<p>
-							Edit
 							<code>app.js</code>
-							again, and add the field
-							<code>ssl</code>
-							in the web server config, with the value
-							<code>true</code>
-							.
+							를 다시 수정합시다.
+							웹 서버 설정에 <code>ssl</code>
+							필드를 추가하고 값을
+							<code>true</code>로 정해줍니다.
 						</p>
 						<pre class="prettyprint">var webServerConf = {  
   port: 8080,
@@ -591,46 +581,37 @@ vertx.deployModule('vertx.auth-mgr-v1.0');
   ...
 </pre>
 						<p>
-							You'll also need to provide a key store. The keystore is just a
-							Java keystore which contains the certificate for the server. It
-							can be manipulated using the Java
-							<code>keytool</code>
-							command. <br />
+							그리고 또 키 저장소를 제공해야 합니다. 키 저장소는 서버에 대한 인증 정보가 담겨있는 자바 키 저장소를 말합니다.
+							키 저장소는 자바의 <code>keytool</code> 명령을 이용해 다룰 수 있습니다. <br />
 						</p>
-						<p>Copy the keystore from the distribution</p>
-						<pre class="prettyprint">cp $VERTX_HOME/examples/javascript/webapp/server-keystore.jks .
+						<p>배포판으로 부터 키 저장소를 복사합니다.</p>
+						<pre class="prettyprint">cp $VERTX_HOME/examples/javascript/webapp/server-keystore.jks
 </pre>
-						<p>Now restart the app again.</p>
+						<p>서버를 다시 재시작 합니다.</p>
 						<pre class="prettyprint">vertx run app.js
 </pre>
 						<p>
-							And go to your browser. This time point your browser at
-							<code>https://localhost:8080</code>
-							. <em>Note it is <strong>https</strong> not http
-							</em>.
+							브라우저로 가서 이번엔 
+							<code>https://localhost:8080</code>으로 접속합니다.
+							<em>http가 아닌 <strong>https</strong> 입니다</em>.
 						</p>
 						<p>
-							<em>You'll initially get a warning from your browser saying
-								the server certificate is unknown. This is to be expected since
-								we haven't told the browser to trust it. You can ignore that for
-								now. On a real server your server cert would probably be from a
-								trusted certificate authority.</em>
+							<em>브라우저에서 알수 없는 인증서라는 경고를 보게 될겁니다.
+								브라우저가 이 키 저장소를 신뢰할 수 없기 때문에 나타나는 메세지입니다.
+								지금은 이 경고를 무시하고 계속할 수 있습니다.
+								실제 서버에서는 서버의 인증서는 신뢰할 수 있는 인증 기관으로 부터 인증 받을 수 있습니다.</em>
 						</p>
-						<p>Now login, and place an order as before.</p>
+						<p>로그인을 하고 이전 처럼 주문을 해봅시다.</p>
 						<p>
-							Easy peasy. <strong>It just works</strong>
+							정말 쉽습니다. <strong>그냥 잘 작동합니다.</strong>
 						</p>
-						<h2 id="step-12-scaling-the-application">Step 12. Scaling the
-							application</h2>
+						<h2 id="step-12-scaling-the-application">12 단계. 어플리케이션 크기 조절</h2>
 						<br />
-						<h3 id="scaling-the-web-server">Scaling the web server</h3>
+						<h3 id="scaling-the-web-server">웹 서버 크기 조절하기</h3>
 						<br />
 						<p>
-							Scaling up the web server part is trivial. Simply start up more
-							instances of the webserver. You can do this by changing the line
-							that starts the
-							<code>vertx.web-server</code>
-							module to something like:
+							웹 서버의 크기를 조절하는 부분은 정말 별것 없습니다.
+							<code>vertx.web-server</code> 모듈을 실행하는 코드 한줄만 다음 처럼 바꿔서 더 많은 인스턴스로 웹 서버를 실행할 수 있습니다.  
 						</p>
 						<pre class="prettyprint">// Start 32 instances of the web server!
 
@@ -642,17 +623,13 @@ vertx.deployModule('vertx.web-server-v1.0', webServerConf, 32);
 								internally it maintains a single listening server, but round
 								robins connections between the various instances</em>.)
 						</p>
-						<h3 id="more-complex-web-applications">More complex web
-							applications</h3>
+						<h3 id="more-complex-web-applications">더 복잡한 웹 어플리케이션</h3>
 						<br />
-						<p>In this simple web application, there was no need to write
-							any custom server side modules, but in more complex applications
-							you might want to write your own server side services which can
-							be used by clients (or by other server side code).</p>
-						<p>Doing this with Vert.x is very straightforward. Here's an
-							example of a trivial server side service which listens on the
-							event bus for messages and sends back the current time to the
-							caller:</p>
+						<p>이 간단한 어플리케이션에서는 직접 모듈을 작성하지는 않았습니다.
+							하지만 더욱 복잡한 어플리케이션에서는 클라이언트에서 사용 될 서버 측 모듈을 작성해야 할 필요가 생길 지도 모릅니다.   
+							(다른 서버 측 코드에서 사용될 수도 있구요.)</p>
+						<p>Vert.x 로 모듈을 간단하게 작성할 수 있습니다.
+						아래는 이벤트 버스로 메세지를 받아 현재 시각을 돌려 보내주는 간단한 서버 측 서비스의 예입니다.</p>
 						<pre class="prettyprint">load('vertx.js');
 
 vertx.eventBus.registerHandler("acme.timeService", function(message, replier) {
@@ -660,27 +637,24 @@ vertx.eventBus.registerHandler("acme.timeService", function(message, replier) {
 });
 </pre>
 						<p>
-							Save this in
-							<code>time_service.js</code>
-							, and add a line in your
+							위 코드를
+							<code>time_service.js</code> 로 저장합니다.
+							그리고 실행 될 때 모듈을 불러올 수 있도록 다음 줄을
 							<code>app.js</code>
-							to load it on startup.
+							에 추가합니다.
 						</p>
-						<p>Then you can just call it from client side JavaScript, or
-							other server side components:</p>
+						<p>그럼 다음과 같이 클라이언트 측 자바스크립트나 다른 서버 측 컴포넌트에서 호출할 수 있습니다.</p>
 						<pre class="prettyprint">eventBus.send("acme.timeService", null, function(reply) {
     console.log("Time is " + reply.current_time);
 });
 </pre>
-						<h3 id="packaging-up-your-code-as-a-module">Packaging up your
-							code as a Module</h3>
+						<h3 id="packaging-up-your-code-as-a-module">코드를 모듈화 하기</h3>
 						<br />
-						<p>You can package up your entire application, or just
-							individual Verticles as modules, so they can be easily reused by
-							other applications, or started on the command line more easily.</p>
+						<p>당신이 만든 어플리케이션을 통째로 혹은 각각의  verticle들을 모듈로 만들 수 있습니다.
+						그리고 그 모듈들은 다른 어플리케이션에서 재사용 되거나 명령줄에서 더 쉽게 실행될 수 있습니다.
+							</p>
 						<p>
-							For an explanation of how to do this, please see the modules
-							manual. <br />
+							어떻게 모듈을 만드는지에 대한 설명은 모듈 매뉴얼을 참고하세요.<br />
 						</p>
 					</div>
 				</div>

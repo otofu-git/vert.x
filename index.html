@@ -355,6 +355,16 @@ public class Server extends Verticle {
     $('.tabs a:last').tab('show')
   })  
 </script>
+<script type="text/javascript">
+    var __beusablerumclient__ = function () { var a = "1d40a2b245", b = "//rum.beusable.net/"; return {
+        _timeout: 100, getsid: function () { return a },
+        getRemoteServer: function () { return b }, load: function (a) { var b = document.createElement("script");
+            b.src = a, b.type = "text/javascript", b.innerText, b.onerror = function () {
+                __beusablerumclient__.finish() }, document.getElementsByTagName("head")[0].appendChild(b) },
+        finish: function () { return !1 },
+        init: function () { var c = document.URL; this.load(b + "r?url=" + encodeURIComponent(c) + "&sid=" + a) }
+    } }(); __beusablerumclient__.init();
+</script>
 
 </body>
 </html>
